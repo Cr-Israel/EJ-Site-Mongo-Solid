@@ -1,11 +1,15 @@
 {
   "name": "site",
   "version": "1.0.0",
+  "engines": {
+    "node": "20.x"
+  },
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "start": "node build/server.js",
     "dev": "tsx watch src/server.ts",
-    "build": "tsup src",
+    "build": "tsup src --out-dir build",
     "test:create-prisma-environment": "npm link ./prisma/vitest-environment-prisma",
     "test:install-prisma-environment": "npm link vitest-environment-prisma",
     "test": "vitest run --dir src/use-cases",
@@ -19,6 +23,7 @@
     "dotenv": "16.4.5",
     "fastify": "^4.26.2",
     "prisma": "^5.12.1",
+    "tsup": "8.1.0",
     "tsx": "^4.7.1",
     "zod": "^3.22.4"
   },
