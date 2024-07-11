@@ -1,0 +1,34 @@
+# Documentação -> Banco de Dados - Sermonize - Site
+Conversando com o Diretor da Sermonize, ele disse que no site, queria uma galeria. Onde, ali teria a foto do estudante que participa da EJ, teria o nome, sobrenome, curso, gitHub, e-mail, hardskills, softskill e os projetos que participou, tendo descrito nos projetos que participou, o que fez em cada projeto.
+
+## Entidade Student
+É a entidade que contém todos os atributos de um estudante que participa da EJ.
+### Atributos
+  - id int PK NN
+  - name char(10) NN
+  - lastname char(10) NN
+  - curso char(20) NN
+  - e-mail char(30) NN
+  - github char(15) NN
+
+## Entidade Hardskills
+É a entidade contém todas as hardskills de uma estudante que participa da EJ.
+### Atributos
+  - studentId int PK FK NN
+  - id int PK NN
+  - name char(20) NN
+
+## Entidade Softskills
+É a entidade contém todas as softskills de uma estudante que participa da EJ.
+### Atributos
+  - studentId int PK FK NN
+  - id int PK NN
+  - name char(20) NN
+
+## Entidade Projects
+É a entidade que contém as informações dos projetos que o estudante participou e o que fez em cada projeto que participou dentro da EJ.
+### Atributos
+  - studentId int PK FK NN
+  - id int PK NN
+  - name char(20) NN
+  - description varchar(255) NN

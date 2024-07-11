@@ -1,0 +1,49 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL_MONGO")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// mongodb+srv://test:test@cluster0.ns1yp.mongodb.net/myFirstDatabase
+// mongodb+srv://crisraeldev:crmongo24@cluster0.mza0vc7.mongodb.net/
+
+model Student {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  lastname String
+  email    String @unique
+  course   String
+  github   String
+
+  hardskills Hardskill[]
+  softskills Softskill[]
+  projects   Project[]
+}
+
+model Hardskill {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  studentId String? @db.ObjectId
+
+  Student Student? @relation(fields: [studentId], references: [id])
+}
+
+model Softskill {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  studentId String? @db.ObjectId
+
+  Student Student? @relation(fields: [studentId], references: [id])
+}
+
+model Project {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  description String
+  studentId   String? @db.ObjectId
+
+  Student Student? @relation(fields: [studentId], references: [id])
+}

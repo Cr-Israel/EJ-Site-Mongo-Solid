@@ -1,0 +1,225 @@
+# Site Sermonize
+
+# Introdução
+## Descrição
+O Back-End da aplicação ficou responsável pela criação das rotas que vão servir o Front-End.
+Também, pela escolha e implementação do Banco de Dados.
+
+Temos uma rota para criação do Student, uma rota para pegar um determinado Student pelo id e uma outra rota que traz todos os students cadastrados no Banco de Dados
+
+## Objetivo Principal
+O objetivo é que, quando o Front-End faça uma requisição. O Back-End responda, trazendo as informação requeridas.
+
+## Tecnologias Utilizadas
+Aqui eu utilizei TypeScript. Para o servidor e as rotas, utilizei o Fasfity por sua perfomance a frente de alguns frameworks, como Express e HapiJS.
+Para a validação de dados utilizei o Zod, por sua integração com o TypeScript.
+No Banco de Dados escolhido foi o PostreSQL e Prisma como ORM. Escolhi o Prisma pela sua fácil inegração com o TypeScript e por sua fácil utilização.
+
+# Instalação e Configuração
+## Requisitos
+Para a utilização do projeto, é preciso ter o Node intalado em sua máquina.
+Além de ter o Docker em sua máquina, para que possa rodar o Banco de Dados.
+
+## Passos para Instalação
+    1 - Clone este repositório
+    2 - Rode o comando:
+      1 - npm install
+      2 - yarn install
+    3 - Abra o projeto em seu editor de código
+    4 - Edite o arquivo '.env' para as suas credencias de Banco de Dados
+    5 - Edite o arquivo 'docker-compose.yaml' para as suas credencias de Banco de Dados
+    6 - Rode o comando para subir o container em seu máquina:
+      1 - docker compose up -d
+      obs: a flag '-d' é para o container rodar em background
+    7 - Rode o comando para iniciar o servidor:
+      1 - npm run dev
+      2 - yarn dev
+    8 - Acesse as rotas da aplicação
+
+# API
+## Endpoints
+Os endpoints presentes na aplicação são:
+    1 - 'http://localhost:3333/create' -> Endpoint para criação de um student
+    2 - 'http://localhost:3333/get-student/:studentId' -> Endpoint para pegar as informação de determinado student, pelo seu ID
+    3 - 'http://localhost:3333/get-all' -> Endpoint para receber todas as informações da tabela student do Banco de Dados
+
+## Parâmetros de requisição e resposta
+### 1
+O primeiro Endpoint 'http://localhost:3333/create', recebe as informações do student, vindas pelo compor da requisição(request.body).
+
+### 2
+O segundo Endpoint 'http://localhost:3333/get-student/:studentId', recebe como parâmetro o ID do student(studentId) e devolve todas as informações deste usuário.
+
+### 3
+O terceiro Endpoint 'http://localhost:3333/get-all', envia todas as informação da tabela student do Banco de Dados.
+
+## Exemplos de solicitações e respostas
+### 1
+No primeiro Endpoint, enviamos no corpo da requisição(request.body) as informações necessárias para cadastrar um student no Banco de Dados:
+{
+  "name": "John",
+  "lastname": "Doe",
+  "course": "Computer Science",
+  "github": "John-Doe",
+  "email": "johndoe@teste.com",
+  "hardskills": [
+    {
+      "name": "Node"
+    },
+    {
+      "name": "Rust"
+    }
+  ],
+  "softskills": [
+    {
+      "name": "Smart conversecion"
+    },
+    {
+      "name": "Flexibel"
+    }
+  ],
+  "projects": [
+    {
+    "name": "Web Site",
+    "description": "Create the Back-End of the application"
+    },
+    {
+      "name": "other",
+      "description": "other things"
+    }
+  ]
+}
+
+Ao preenchermos as informações e enviarmos para o servidor, ele nos retorna com o um status HTTP/1.1 201 Created
+content-type: application/json; charset=utf-8
+content-length: 52
+Date: Tue, 16 Apr 2024 18:24:11 GMT
+Connection: close
+
+{
+  "studentId": "43b0ecd8-7efe-4f60-a8e5-ab72bedc8d4c"
+}
+
+### 2
+No segundo Endpoint, eu envie junto da rota, o ID do student(studentId):
+http://localhost:3333/get-student/get-student/43b0ecd8-7efe-4f60-a8e5-ab72bedc8d4c 
+
+E o servidor me retorna todas as informações deste determinado student:
+HTTP/1.1 200 OK
+content-type: application/json; charset=utf-8
+content-length: 410
+Date: Tue, 16 Apr 2024 18:25:20 GMT
+Connection: close
+
+{
+  "student": {
+    "id": "43b0ecd8-7efe-4f60-a8e5-ab72bedc8d4c",
+    "name": "John",
+    "lastname": "Doe",
+    "course": "Computer Science",
+    "github": "John-Doe",
+    "email": "johndoe@teste.com",
+    "hardskills": [
+      {
+        "name": "Node"
+      },
+      {
+        "name": "Rust"
+      }
+    ],
+    "softskills": [
+      {
+        "name": "Smart conversecion"
+      },
+      {
+        "name": "Flexibel"
+      }
+    ],
+    "projects": [
+      {
+        "name": "Web Site",
+        "description": "Create the Back-End of the application"
+      },
+      {
+        "name": "other",
+        "description": "other things"
+      }
+    ]
+  }
+}
+
+### 3
+No terceiro Endpoint, faço requisição ao servidor, para que ele me envie todos os cadastros na tabela student, do meu Banco de Dados:
+http://localhost:3333/get-all
+
+Assim, eu obtenho todas as informações já casdatradas:
+[
+{
+    "id": "43b0ecd8-7efe-4f60-a8e5-ab72bedc8d4c",
+    "name": "John",
+    "lastname": "Doe",
+    "course": "Computer Science",
+    "github": "John-Doe",
+    "email": "johndoe@teste.com",
+    "hardskills": [
+      {
+        "name": "Node"
+      },
+      {
+        "name": "Rust"
+      }
+    ],
+    "softskills": [
+      {
+        "name": "Smart conversecion"
+      },
+      {
+        "name": "Flexibel"
+      }
+    ],
+    "projects": [
+      {
+        "name": "Web Site",
+        "description": "Create the Back-End of the application"
+      },
+      {
+        "name": "other",
+        "description": "other things"
+      }
+    ]
+  },
+{
+    "id": "43b0ecd8-7efe-4f60-a8e5-ab72bedc8d4c",
+    "name": "John",
+    "lastname": "Doe",
+    "course": "Computer Science",
+    "github": "John-Doe",
+    "email": "johndoe@teste.com",
+    "hardskills": [
+      {
+        "name": "Node"
+      },
+      {
+        "name": "Rust"
+      }
+    ],
+    "softskills": [
+      {
+        "name": "Smart conversecion"
+      },
+      {
+        "name": "Flexibel"
+      }
+    ],
+    "projects": [
+      {
+        "name": "Web Site",
+        "description": "Create the Back-End of the application"
+      },
+      {
+        "name": "other",
+        "description": "other things"
+      }
+    ]
+  }
+]
